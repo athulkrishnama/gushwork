@@ -1,5 +1,3 @@
-
-/* Lenis default styles for smooth scrolling */
 html.lenis, html.lenis body {
   height: auto;
 }
@@ -19,4 +17,3 @@ html.lenis, html.lenis body {
 .lenis.lenis-scrolling iframe {
   pointer-events: none;
 }
-
