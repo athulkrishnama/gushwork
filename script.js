@@ -142,3 +142,100 @@ mainImageWrapper.addEventListener('mouseleave', () => {
         }
     }, 300);
 });
+
+// Quote Modal Logic
+const quoteBtns = document.querySelectorAll('.trigger-quote-modal');
+const quoteModalBackdrop = document.getElementById('quote-modal-backdrop');
+const quoteModalContent = document.getElementById('quote-modal-content');
+const closeModalBtn = document.getElementById('close-quote-modal');
+
+function openQuoteModal() {
+    quoteModalBackdrop.classList.remove('pointer-events-none', 'opacity-0');
+    quoteModalBackdrop.classList.add('opacity-100');
+    
+    quoteModalContent.classList.remove('scale-95', 'opacity-0');
+    quoteModalContent.classList.add('scale-100', 'opacity-100');
+}
+
+function closeQuoteModal() {
+    quoteModalBackdrop.classList.remove('opacity-100');
+    quoteModalBackdrop.classList.add('pointer-events-none', 'opacity-0');
+    
+    quoteModalContent.classList.remove('scale-100', 'opacity-100');
+    quoteModalContent.classList.add('scale-95', 'opacity-0');
+}
+
+if (quoteBtns.length > 0 && quoteModalBackdrop && closeModalBtn) {
+    quoteBtns.forEach(btn => btn.addEventListener('click', openQuoteModal));
+    closeModalBtn.addEventListener('click', closeQuoteModal);
+    
+    // Close on clicking outside the modal content
+    quoteModalBackdrop.addEventListener('click', (e) => {
+        if (e.target === quoteModalBackdrop) {
+            closeQuoteModal();
+        }
+    });
+
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && quoteModalBackdrop.classList.contains('opacity-100')) {
+            closeQuoteModal();
+        }
+    });
+}
+
+// Catalogue Modal Logic
+const catalogueModalBtn = document.getElementById('catalogue-modal-btn');
+const catalogueModalBackdrop = document.getElementById('catalogue-modal-backdrop');
+const catalogueModalContent = document.getElementById('catalogue-modal-content');
+const closeCatalogueModalBtn = document.getElementById('close-catalogue-modal');
+const catalogueEmailInput = document.getElementById('catalogue-email-input');
+const downloadBrochureBtn = document.getElementById('download-brochure-submit');
+
+function openCatalogueModal() {
+    catalogueModalBackdrop.classList.remove('pointer-events-none', 'opacity-0');
+    catalogueModalBackdrop.classList.add('opacity-100');
+    
+    catalogueModalContent.classList.remove('scale-95', 'opacity-0');
+    catalogueModalContent.classList.add('scale-100', 'opacity-100');
+}
+
+function closeCatalogueModal() {
+    catalogueModalBackdrop.classList.remove('opacity-100');
+    catalogueModalBackdrop.classList.add('pointer-events-none', 'opacity-0');
+    
+    catalogueModalContent.classList.remove('scale-100', 'opacity-100');
+    catalogueModalContent.classList.add('scale-95', 'opacity-0');
+}
+
+if (catalogueModalBtn && catalogueModalBackdrop && closeCatalogueModalBtn) {
+    catalogueModalBtn.addEventListener('click', openCatalogueModal);
+    closeCatalogueModalBtn.addEventListener('click', closeCatalogueModal);
+    
+    catalogueModalBackdrop.addEventListener('click', (e) => {
+        if (e.target === catalogueModalBackdrop) {
+            closeCatalogueModal();
+        }
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && catalogueModalBackdrop.classList.contains('opacity-100')) {
+            closeCatalogueModal();
+        }
+    });
+}
+
+// Basic validation to enable 'Download Brochure' button
+if (catalogueEmailInput && downloadBrochureBtn) {
+    catalogueEmailInput.addEventListener('input', (e) => {
+        if (e.target.value.trim() !== '' && e.target.validity.valid) {
+            downloadBrochureBtn.classList.remove('bg-[#DEE2E6]', 'pointer-events-none');
+            // Using a nice blue for enabled state
+            downloadBrochureBtn.classList.add('bg-[#2D3A8C]', 'hover:bg-[#1E296B]', 'cursor-pointer', 'active:scale-[0.98]');
+        } else {
+            downloadBrochureBtn.classList.add('bg-[#DEE2E6]', 'pointer-events-none');
+            downloadBrochureBtn.classList.remove('bg-[#2D3A8C]', 'hover:bg-[#1E296B]', 'cursor-pointer', 'active:scale-[0.98]');
+        }
+    });
+}
+
