@@ -1,5 +1,10 @@
 gsap.registerPlugin(ScrollTrigger);
 
+/**
+ * Initialize Smooth Scrolling Mechanism
+ * We use Lenis to manage a buttery-smooth scrolling experience 
+ * over the default rugged browser wheel behavior.
+ */
 const lenis = new Lenis({
     duration: 1.2,
     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), 
@@ -20,6 +25,10 @@ gsap.ticker.add((time) => {
 
 gsap.ticker.lagSmoothing(0);
 
+/**
+ * Product Presentation Constants
+ * Gathers interactive DOM elements specifically around the hero gallery.
+ */
 const mainImageWrapper = document.getElementById('product-main-image-wrapper');
 const mainImage = document.getElementById('product-main-image');
 const lens = document.getElementById('zoom-lens');
@@ -33,6 +42,10 @@ const validThumbnails = Array.from(thumbnails).filter(btn => btn.hasAttribute('d
 const images = validThumbnails.map(btn => btn.getAttribute('data-src'));
 let currentIndex = 0;
 
+/**
+ * Updates the hero's main image display dynamically based on thumbnail index.
+ * Handles fade out/in transformation and syncs the magnification clone source.
+ */
 function updateMainImage(index) {
     if (images.length === 0) return;
     
@@ -54,6 +67,7 @@ function updateMainImage(index) {
     });
 }
 
+// Attach listeners to all thumbnail dots/images to jump to specific image
 validThumbnails.forEach((btn, index) => {
     btn.addEventListener('click', () => {
         currentIndex = index;
@@ -74,10 +88,12 @@ nextBtn.addEventListener('click', (e) => {
 });
 
 // Custom Zoom Lens Logic
-const ZOOM_LEVEL = 2.5; // Magnification scale
+// Utilizes localized mouse coordinate offset tracking to extrapolate a magnified view.
+const ZOOM_LEVEL = 2.5; // Magnification scale multiplier
 
+// Show the Lens bounding box when cursor hovers over the parent image wrapper
 mainImageWrapper.addEventListener('mouseenter', () => {
-    if (window.innerWidth < 1024) return; // Disable zoom popup on mobile
+    if (window.innerWidth < 1024) return; // Disable zoom popup firmly on mobile viewports
     
     lens.classList.remove('hidden');
     resultWindow.classList.remove('hidden');
@@ -143,7 +159,10 @@ mainImageWrapper.addEventListener('mouseleave', () => {
     }, 300);
 });
 
-// Quote Modal Logic
+/**
+ * Quote Request Modal Management
+ * Gathers all designated trigger buttons and wires localized open/close/escape patterns.
+ */
 const quoteBtns = document.querySelectorAll('.trigger-quote-modal');
 const quoteModalBackdrop = document.getElementById('quote-modal-backdrop');
 const quoteModalContent = document.getElementById('quote-modal-content');
@@ -184,7 +203,10 @@ if (quoteBtns.length > 0 && quoteModalBackdrop && closeModalBtn) {
     });
 }
 
-// Catalogue Modal Logic
+/**
+ * Catalogue Request Modal Management
+ * Form interaction dedicated to downloading product brochures.
+ */
 const catalogueModalBtn = document.getElementById('catalogue-modal-btn');
 const catalogueModalBackdrop = document.getElementById('catalogue-modal-backdrop');
 const catalogueModalContent = document.getElementById('catalogue-modal-content');
